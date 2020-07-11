@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<link rel="icon" href="https://img.icons8.com/fluent/48/000000/us-dollar.png">
+<head>
+<title>Bill tracker</title>
+<link rel="stylesheet" th:href="@{/styles.css}" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand monospace" th:href="@{/company/getAll}">Bill tracker</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarText" aria-controls="navbarText"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false">Country</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/country/getAll}">Get all</a> <a
+						class="dropdown-item" th:href="@{/country/add}">Add</a>
+				</div></li>
+			<li class="nav-item dropdown active"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Company </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/company/getAll}">Get all</a> <a
+						class="dropdown-item active" th:href="@{/company/add}">Add</a>
+				</div></li>
+		</ul>
+	</nav>
+	<form method="POST" th:object="${company}">
+		<div class="form-group">
+			<div class="grid">
+			<div class="ingredient-group" id="wraps">
+				<h3 class="text-center">Designate a new company:</h3>
+				<br/>
+				<br/>
+				<div>
+					<!-- <input name="name" type="text"
+						th:value="${country.name}" /> <span
+						th:text="Insert">Insert</span><br /> -->
+						<input type="text" class="form-control text-center" placeholder="Enter company name" th:field="*{companyName}" />
+				</div>
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<div class=" h-100 d-flex justify-content-center align-items-center">
+			<!-- <input type="text" th:field="*{name}" /> <br /> -->
+			<button>Submit this company</button>
+		</div>
+		</div>
+	</form>
+	<br/>
+	<br/>
+	<blockquote class="blockquote footer" style="margin-bottom: 0;">
+		<p class="mb-0 text-center">"Rule No. 1: Never lose money. Rule
+			No. 2: Never forget rule No. 1."</p>
+		<footer class="blockquote-footer text-center"> Warren Buffett
+		</footer>
+	</blockquote>
+</body>
+</html>

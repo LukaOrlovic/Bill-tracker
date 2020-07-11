@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<link rel="icon" href="https://img.icons8.com/fluent/48/000000/us-dollar.png">
+<head>
+<title>Bill tracker</title>
+<link rel="stylesheet" th:href="@{/styles.css}" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand monospace" th:href="@{/company/getAll}">Bill tracker</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarText" aria-controls="navbarText"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false">Country</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/country/getAll}">Get all</a> <a
+						class="dropdown-item" th:href="@{/country/add}">Add</a>
+				</div></li>
+			<li class="nav-item dropdown active"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Company </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item active" th:href="@{/company/getAll}">Get all</a> <a
+						class="dropdown-item" th:href="@{/company/add}">Add</a>
+				</div></li>
+		</ul>
+	</nav>
+	<h3 class="text-center">All available companies:</h3>
+	<div class="table-responsive">
+		<table
+			class="table table-striped table-dark table-bordered table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Company ID</th>
+					<th scope="col">Company Name</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${companies}">
+					<th scope="row" th:text="${c.companyId}"></th>
+					<td th:text="${c.companyName}"></td>
+					<td>
+						<form method="POST"
+							th:action="@{/company/editCompany(companyId=${c.companyId})}">
+							<button type="submit" name="submit" value="value"
+								class="link-button">EDIT</button>
+						</form>
+					</td>
+					<td>
+						<form method="POST"
+							th:action="@{/company/delete(companyId=${c.companyId})}">
+							<button type="submit" name="submit" value="value"
+								class="link-button">DELETE</button>
+						</form>
+					</td>
+				</tr>
+		</table>
+	</div>
+	<blockquote class="blockquote footer" style="margin-bottom: 0;">
+		<p class="mb-0 text-center">"Rule No. 1: Never lose money. Rule
+			No. 2: Never forget rule No. 1."</p>
+		<footer class="blockquote-footer text-center"> Warren Buffett
+		</footer>
+	</blockquote>
+</body>
+</html>
