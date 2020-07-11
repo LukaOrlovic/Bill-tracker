@@ -1,0 +1,2 @@
+# To change language of this project from HTML to Java:
+*.html linguist-language=Java
