@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "company")
@@ -13,6 +14,7 @@ public class CompanyDto{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int companyId;
+	@NotEmpty
 	private String companyName;
 	private boolean parentCompany;
 

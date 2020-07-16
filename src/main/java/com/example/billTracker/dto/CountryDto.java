@@ -1,11 +1,11 @@
 package com.example.billTracker.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Country")
@@ -14,6 +14,7 @@ public class CountryDto{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int countryId;
+	@NotEmpty
 	private String name;
 	
 	public CountryDto(){

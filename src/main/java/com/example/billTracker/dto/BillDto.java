@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "bill")
@@ -16,17 +18,22 @@ public class BillDto{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private int billId;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "payingCompanyId")
+	@NotNull
 	private CompanyDto payingCompany;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "receivingCompanyId")
+	@NotNull
 	private CompanyDto receivingCompany;
 	
+	@NotEmpty(message = "Amount cannot be empty")
 	private double amountValue;
+	@NotEmpty
 	private String currency;
 
 	public BillDto(){
