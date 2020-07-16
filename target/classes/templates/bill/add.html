@@ -25,13 +25,15 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<ul class="navbar-nav">
-			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">Country</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" th:href="@{/country/getAll}">Get all</a> <a
-						class="dropdown-item active" th:href="@{/country/add}">Add</a>
+						class="dropdown-item" th:href="@{/country/add}">Add</a>
 				</div></li>
+				
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -40,31 +42,54 @@
 					<a class="dropdown-item" th:href="@{/company/getAll}">Get all</a> <a
 						class="dropdown-item" th:href="@{/company/add}">Add</a>
 				</div></li>
-			<li class="nav-item dropdown"><a
+				
+			<li class="nav-item dropdown active"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Bill </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> <a
-						class="dropdown-item" th:href="@{/bill/add}">Add</a>
+						class="dropdown-item active" th:href="@{/bill/add}">Add</a>
 				</div></li>
 		</ul>
 	</nav>
-	<form method="POST" th:object="${country}">
+	<form method="POST" th:object="${bill}">
 		<div class="form-group">
 			<div class="grid">
 				<div class="ingredient-group" id="wraps">
-					<h3 class="text-center">Insert a new country:</h3>
-					<br /> <br />
+					<h3 class="text-center">Create a new bill:</h3>
+					<br />
 					<div>
+						<div class="text-center">Insert amount:</div>
+						<input type="number" class="form-control text-center"
+							placeholder="Enter amount:" th:field="*{amountValue}" />
+					</div>
+					<br/>
+					<div>
+						<div class="text-center">Insert currency:</div>
 						<input type="text" class="form-control text-center"
-							placeholder="Enter country name" th:field="*{name}" />
+							placeholder="Enter currency:" th:field="*{currency}" />
+					</div>
+					<br/>
+					<div class="form-group">
+						<div class="text-center">Select paying company:</div>
+						<select class="custom-select text-center" th:field="*{payingCompany}">
+							<option th:each="c : ${companies}" th:value="${{c}}"
+								th:text="${c.companyName}"></option>
+						</select>
+					</div>
+					<br/>
+					<div class="form-group">
+						<div class="text-center">Select receiving company:</div>
+						<select class="custom-select text-center" th:field="*{receivingCompany}">
+							<option th:each="receivingCompany : ${companies}" th:value="${{receivingCompany}}"
+								th:text="${receivingCompany.companyName}"></option>
+						</select>
 					</div>
 				</div>
 			</div>
-			<br /> <br />
 			<div class=" h-100 d-flex justify-content-center align-items-center">
-				<button>Submit this country</button>
+				<button>Submit this company</button>
 			</div>
 		</div>
 	</form>

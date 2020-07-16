@@ -12,3 +12,8 @@
   font-family: Lucida Console, Courier, monospace;
   font-size: 35px;
 }
+
+.form-group{
+	width: 50%;
+	margin-left: 23%;
+}

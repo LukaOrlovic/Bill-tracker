@@ -1,9 +1,13 @@
 package com.example.billTracker.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +17,15 @@ public class BillDto{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int billId;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "payingCompanyId")
 	private CompanyDto payingCompany;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "receivingCompanyId")
 	private CompanyDto receivingCompany;
+	
 	private double amountValue;
 	private String currency;
 

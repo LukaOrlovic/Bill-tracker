@@ -14,16 +14,27 @@ public class CompanyDto{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int companyId;
 	private String companyName;
+	private boolean parentCompany;
 
-	public CompanyDto(int companyId, String name){
+	public CompanyDto(int companyId, String companyName, boolean parentCompany){
+		super();
 		this.companyId = companyId;
-		this.companyName = name;
+		this.companyName = companyName;
+		this.parentCompany = parentCompany;
 	}
-	
+
 	public CompanyDto(){
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean isParentCompany(){
+		return parentCompany;
+	}
+
+	public void setParentCompany(boolean parentCompany){
+		this.parentCompany = parentCompany;
+	}
+	
 	public int getCompanyId(){
 		return companyId;
 	}
