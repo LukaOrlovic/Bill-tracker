@@ -48,8 +48,11 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Bill </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> <a
-						class="dropdown-item active" th:href="@{/bill/add}">Add</a>
+					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> 
+					<a class="dropdown-item active" th:href="@{/bill/add}">Add</a>
+					<a class="dropdown-item" th:href="@{/bill/find}">Find by ID</a>
+					<a class="dropdown-item" th:href="@{/bill/findAmounts}">Find by Amount</a>
+					<a class="dropdown-item" th:href="@{/bill/findByCompanies}">Find by Companies</a>
 				</div></li>
 		</ul>
 	</nav>

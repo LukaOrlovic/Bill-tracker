@@ -40,6 +40,18 @@
 					<a class="dropdown-item" th:href="@{/company/getAll}">Get all</a> <a
 						class="dropdown-item" th:href="@{/company/add}">Add</a>
 				</div></li>
+				
+			<li class="nav-item dropdown active"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Bill </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> 
+					<a class="dropdown-item" th:href="@{/bill/add}">Add</a>
+					<a class="dropdown-item" th:href="@{/bill/find}">Find by ID</a>
+					<a class="dropdown-item" th:href="@{/bill/findAmounts}">Find by Amount</a>
+					<a class="dropdown-item" th:href="@{/bill/findByCompanies}">Find by Companies</a>
+				</div></li>
 		</ul>
 	</nav>
 	<form method="POST" th:action="@{/bill/edit}" th:object="${bill}">
