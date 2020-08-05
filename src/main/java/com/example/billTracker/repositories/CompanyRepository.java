@@ -13,4 +13,6 @@ public interface CompanyRepository extends CrudRepository<CompanyDto, Integer>{
 	@Transactional
 	@Query("update CompanyDto c set c.companyName = ?1 where c.companyId = ?2")
 	void updateCompany(String companyName, int companyId);
+	
+	CompanyDto findCompanyByParentCompanyIsTrue();
 }

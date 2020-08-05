@@ -23,19 +23,19 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<ul class="navbar-nav">
-			<li class="nav-item dropdown active"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">Country</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item active" th:href="@{/country/getAll}">Get all</a> <a
+					<a class="dropdown-item" th:href="@{/country/getAll}">Get all</a> <a
 						class="dropdown-item" th:href="@{/country/add}">Add</a>
 				</div></li>
-			<li class="nav-item dropdown"><a
+			<li class="nav-item dropdown active"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Company </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" th:href="@{/company/getAll}">Get all</a> <a
+					<a class="dropdown-item active" th:href="@{/company/getAll}">Get all</a> <a
 						class="dropdown-item" th:href="@{/company/add}">Add</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
@@ -51,32 +51,38 @@
 				</div></li>
 		</ul>
 	</nav>
-	<h3 class="text-center">All added countries:</h3>
+	<h3 class="text-center">All available VATs:</h3>
 	<div class="table-responsive">
 		<table
 			class="table table-striped table-dark table-bordered table-hover">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">Country ID</th>
+					<th scope="col">VAT ID</th>
+					<th scope="col">Parent Company Name</th>
 					<th scope="col">Country Name</th>
+					<th scope="col">Amount Value</th>
+					<th scope="col">Currency</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c : ${countries}">
-					<th scope="row" th:text="${c.countryId}"></th>
-					<td th:text="${c.name}"></td>
+				<tr th:each="v : ${vats}">
+					<th scope="row" th:text="${v.vatId}"></th>
+					<td th:text="${v.company.companyName}"></td>
+					<td th:text="${v.country.name}"></td>
+					<td th:text="${v.amountValue}"></td>
+					<td th:text="${v.currency}"></td>
 					<td>
 						<form method="POST"
-							th:action="@{/country/editCountry(countryId=${c.countryId})}">
+							th:action="@{/vat/editVat(vatId=${v.vatId})}">
 							<button type="submit" name="submit" value="value"
 								class="link-button">EDIT</button>
 						</form>
 					</td>
 					<td>
 						<form method="POST"
-							th:action="@{/country/delete(countryId=${c.countryId})}">
+							th:action="@{/vat/delete(vatId=${v.vatId})}">
 							<button type="submit" name="submit" value="value"
 								class="link-button">DELETE</button>
 						</form>

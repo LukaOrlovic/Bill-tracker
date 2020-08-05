@@ -1,15 +1,19 @@
 package com.example.billTracker.dto;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+@Entity
+@Table(name = "vat")
 public class VatDto{
 
 	@Id
@@ -18,12 +22,12 @@ public class VatDto{
 	private int vatId;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "employeeId")
+	@JoinColumn(name = "parentCompanyId")
 	@NotNull
-	private ParentCompanyDto company;
+	private CompanyDto company;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "employeeId")
+	@JoinColumn(name = "countryId")
 	@NotNull
 	private CountryDto country;
 	
@@ -37,13 +41,14 @@ public class VatDto{
 	public VatDto(){
 		// TODO Auto-generated constructor stub
 	}
-	
-	public VatDto(int vatId, ParentCompanyDto company, CountryDto country, int value, String currency){
+
+	public VatDto(@NotNull int vatId, @NotNull CompanyDto company, @NotNull CountryDto country,
+			@NotEmpty(message = "Amount cannot be empty") @Positive double amountValue, @NotEmpty String currency){
 		super();
 		this.vatId = vatId;
 		this.company = company;
 		this.country = country;
-		this.amountValue = value;
+		this.amountValue = amountValue;
 		this.currency = currency;
 	}
 
@@ -53,10 +58,11 @@ public class VatDto{
 	public void setVatId(int vatId){
 		this.vatId = vatId;
 	}
-	public ParentCompanyDto getCompany(){
+	public CompanyDto getCompany(){
 		return company;
 	}
-	public void setCompany(ParentCompanyDto company){
+
+	public void setCompany(CompanyDto company){
 		this.company = company;
 	}
 	public CountryDto getCountry(){

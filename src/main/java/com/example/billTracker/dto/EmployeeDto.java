@@ -1,7 +1,15 @@
 package com.example.billTracker.dto;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Document(indexName = "employee")
 public class EmployeeDto{
 
+	@Id
 	private int employeeId;
 	private String name;
 	private String surname;
@@ -43,12 +51,12 @@ public class EmployeeDto{
 		this.surname = surname;
 	}
 
-	public String getPoistion(){
+	public String getPosition(){
 		return position;
 	}
 
-	public void setPoistion(String poistion){
-		this.position = poistion;
+	public void setPosition(String position){
+		this.position = position;
 	}
 	
 	

@@ -11,15 +11,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Document(indexName = "salary")
 public class SalaryDto{
 
-	@Id
+	@org.springframework.data.annotation.Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
 	private int salaryId;
 	
+	@Field(type = FieldType.Nested, includeInParent = true)
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "employeeId")
 	@NotNull
 	private EmployeeDto employee;
 	
