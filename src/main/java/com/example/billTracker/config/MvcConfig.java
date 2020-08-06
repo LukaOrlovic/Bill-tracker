@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.example.billTracker.repositories")
-@ComponentScan(basePackageClasses = EmployeeListBean.class)
 public class MvcConfig implements WebMvcConfigurer{
 
 	@Override
