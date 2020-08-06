@@ -24,7 +24,7 @@ public class SalaryDto{
 	private int salaryId;
 	
 	@Field(type = FieldType.Nested, includeInParent = true)
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "employeeId")
 	@NotNull
 	private EmployeeDto employee;
 	

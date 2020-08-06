@@ -13,5 +13,7 @@ public interface SalaryRepository extends ElasticsearchRepository<SalaryDto, Int
 	List<SalaryDto> findByOrderBySalaryIdAsc();
 	
 	List<SalaryDto> findSalariesByAmountValueBetween(Double from, Double to);
+	
+	SalaryDto findByEmployeeEmployeeId(int employeeId);
 
 }

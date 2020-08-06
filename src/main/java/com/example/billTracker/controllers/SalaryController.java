@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.example.billTracker.dto.BillDto;
-import com.example.billTracker.dto.CountryDto;
-import com.example.billTracker.dto.EmployeeDto;
 import com.example.billTracker.dto.SalaryDto;
+import com.example.billTracker.helper.ErrorMessage;
 import com.example.billTracker.repositories.EmployeeRepository;
 import com.example.billTracker.repositories.SalaryRepository;
 
@@ -62,7 +60,7 @@ public class SalaryController{
 	}
 	
 	@PostMapping("/edit")
-	public RedirectView editSalary(@ModelAttribute("salary") SalaryDto salary) {
+	public String editSalary(@ModelAttribute("salary") SalaryDto salary) {
 				
 		salary.setSalaryId(editSalary.getSalaryId());
 		
@@ -70,15 +68,15 @@ public class SalaryController{
 		
 		editSalary = null;
 		
-		return new RedirectView("http://localhost:8080/salary/getAll");
+		return "redirect:/salary/getAll";
 	}
 	
 	@PostMapping("/delete")
-	public RedirectView deleteSalary(@RequestParam("salaryId") String salaryId, Model model) {
+	public String deleteSalary(@RequestParam("salaryId") String salaryId, Model model) {
 
 	    salaryRepository.deleteById(Integer.parseInt(salaryId));
 	          
-	    return new RedirectView("http://localhost:8080/salary/getAll");
+	    return "redirect:/salary/getAll";
 	}
 	
 	@GetMapping("/add")
@@ -94,11 +92,11 @@ public class SalaryController{
 	}
 	
 	@PostMapping("/add")
-	public RedirectView salaryAdded(SalaryDto salary) {
+	public String salaryAdded(SalaryDto salary) {
 		
 		salaryRepository.save(salary);
 		
-		return new RedirectView("http://localhost:8080/salary/getAll");
+		return "redirect:/salary/getAll";
 	}
 	
 	@GetMapping("/findAmounts")
@@ -119,12 +117,20 @@ public class SalaryController{
 	public String findBetweenAmounts(@RequestParam("amountFrom") String amountFrom, @RequestParam("amountTo") String amountTo, Model model) {
 				
 		if(Double.parseDouble(amountFrom) > Double.parseDouble(amountTo)) {
+			ErrorMessage errorMessage = new ErrorMessage("Amount To must be larger than amount From.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
 			return "error";
 		}
 		
 		List<SalaryDto> salaries = salaryRepository.findSalariesByAmountValueBetween(Double.parseDouble(amountFrom), Double.parseDouble(amountTo));
 		
 		if(salaries.isEmpty()) {
+			ErrorMessage errorMessage = new ErrorMessage("Could not find Salary between inserted amounts.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
 			return "error";
 		}
 		

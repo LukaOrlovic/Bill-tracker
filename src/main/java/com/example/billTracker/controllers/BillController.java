@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.billTracker.dto.BillDto;
 import com.example.billTracker.dto.CompanyDto;
+import com.example.billTracker.helper.ErrorMessage;
 import com.example.billTracker.repositories.BillRepository;
 import com.example.billTracker.repositories.CompanyRepository;
 
@@ -41,9 +40,13 @@ public class BillController{
 
 		model.addAttribute("bills", bills);
 
-		if(bills.isEmpty())
-			return "error";
-		return "bill/all";
+		if(!bills.isEmpty()) return "bill/all";
+		
+		ErrorMessage errorMessage = new ErrorMessage("Could not find any available bills.");
+		
+		model.addAttribute("errorObject", errorMessage);
+		
+		return "error";
 	}
 	
 	@GetMapping("/add")
@@ -59,30 +62,31 @@ public class BillController{
 	}
 
 	@PostMapping("/add")
-	public RedirectView billAdded(BillDto bill, RedirectAttributes redirectAttrs){
+	public String billAdded(BillDto bill, Model model){
 		
 		if(bill.getReceivingCompany().isParentCompany() ^ bill.getPayingCompany().isParentCompany()) {
 			
 			billRepository.save(bill);
-
-			return new RedirectView("http://localhost:8080/bill/getAll");
+			
+			return "redirect:/bill/getAll";
+			
 		} else {	
+						
+			ErrorMessage errorMessage = new ErrorMessage("Neither of the selected companies is a Parent company.");
 			
-			RedirectView rv = new RedirectView("http://localhost:8080/error");
+			model.addAttribute("errorObject", errorMessage);
 			
-			//redirectAttrs.addAttribute("errorMessage", "Neither of the selected companies is a Parent company");
-			
-			return rv;
+			return "error";
 		}
 		
 	}
 	
 	@PostMapping("/delete")
-	public RedirectView deleteBill(@RequestParam("billId") String billId, Model model) {
+	public String deleteBill(@RequestParam("billId") String billId, Model model) {
 
 	    billRepository.deleteById(Integer.parseInt(billId));
       
-	    return new RedirectView("http://localhost:8080/bill/getAll");
+	    return "redirect:/bill/getAll";
 	}
 	
 	
@@ -98,6 +102,11 @@ public class BillController{
 	    model.addAttribute("companies", companyRepository.findAll());
       
 	    if(bill.isPresent()) return "bill/edit";
+	    
+	    ErrorMessage errorMessage = new ErrorMessage("The selected bill could not be found.");
+		
+		model.addAttribute("errorObject", errorMessage);
+		
 	    return "error";
 	}
 	
@@ -116,7 +125,13 @@ public class BillController{
 				
 		Optional<BillDto> foundBill = billRepository.findById(bill.getBillId());
 		
-		if(!foundBill.isPresent())	return "bill/find";
+		if(!foundBill.isPresent()) {
+			ErrorMessage errorMessage = new ErrorMessage("Could not find bill with this ID.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
+		    return "error";
+		}
 				
 		model.addAttribute("bill", foundBill.get());
 		
@@ -129,7 +144,7 @@ public class BillController{
 	}
 	
 	@PostMapping("/edit")
-	public RedirectView editBill(@ModelAttribute("bill") BillDto bill) {
+	public String editBill(@ModelAttribute("bill") BillDto bill) {
 						
 		bill.setBillId(editBill.getBillId());
 		
@@ -137,7 +152,7 @@ public class BillController{
 		
 		editBill = null;
 		
-		return new RedirectView("http://localhost:8080/bill/getAll");
+		return "redirect:/bill/getAll";
 	}
 	
 	@GetMapping("/findAmounts")
@@ -158,12 +173,20 @@ public class BillController{
 	public String findBetweenAmounts(@RequestParam("amountFrom") String amountFrom, @RequestParam("amountTo") String amountTo, Model model) {
 				
 		if(Double.parseDouble(amountFrom) > Double.parseDouble(amountTo)) {
+			ErrorMessage errorMessage = new ErrorMessage("Amount To must be larger than amount From.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
 			return "error";
 		}
 		
 		List<BillDto> bills = billRepository.findBillsByAmountValueBetween(Double.parseDouble(amountFrom), Double.parseDouble(amountTo));
 		
 		if(bills.isEmpty()) {
+			ErrorMessage errorMessage = new ErrorMessage("Could not find bill between inserted amounts.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
 			return "error";
 		}
 		
@@ -198,6 +221,11 @@ public class BillController{
 				billRepository.findBillsByPayingCompanyCompanyIdIsAndReceivingCompanyCompanyIdIs(payingCompanyId, receivingCompanyId);
 		
 		if(bills.isEmpty()) {
+			
+			ErrorMessage errorMessage = new ErrorMessage("Could not find any bills saved with these companies.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
 			return "error";
 		}
 		

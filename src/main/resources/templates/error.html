@@ -51,9 +51,15 @@
 				</div></li>
 		</ul>
 	</nav>
-	
-	<h1>An error has occured!!!</h1>
-	<h1 th:text="${errorMessage}"></h1>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<h2 class="text-center" th:text="${errorObject} == null ? 'An unknown error has occured' : ${errorObject.errorDesc}"></h2>
 	<br/>
 	<br/>
 	<blockquote class="blockquote footer" style="margin-bottom: 0;">

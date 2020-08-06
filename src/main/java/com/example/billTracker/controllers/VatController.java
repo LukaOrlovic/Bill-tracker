@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.billTracker.dto.CompanyDto;
 import com.example.billTracker.dto.CountryDto;
 import com.example.billTracker.dto.VatDto;
+import com.example.billTracker.helper.ErrorMessage;
 import com.example.billTracker.repositories.CompanyRepository;
 import com.example.billTracker.repositories.CountryRepository;
 import com.example.billTracker.repositories.VatRepository;
@@ -65,11 +66,11 @@ public class VatController{
 	}
 	
 	@PostMapping("/add")
-	public RedirectView vatAdded(VatDto vat) {
+	public String vatAdded(VatDto vat) {
 		
 		vatRepository.save(vat);
 		
-		return new RedirectView("http://localhost:8080/vat/getAll");
+		return "redirect:/vat/getAll";
 	}
 	
 	@PostMapping("/editVat")
@@ -82,11 +83,16 @@ public class VatController{
 	    model.addAttribute("vat", vat);
       
 	    if(vat.isPresent()) return "vat/edit";
-	    return "error";
+	    
+	    ErrorMessage errorMessage = new ErrorMessage("Could not find the selected VAT.");
+		
+		model.addAttribute("errorObject", errorMessage);
+		
+		return "error";
 	}
 	
 	@PostMapping("/edit")
-	public RedirectView editVat(@ModelAttribute("vat") VatDto vat) {
+	public String editVat(@ModelAttribute("vat") VatDto vat) {
 			
 		vat.setVatId(editVat.getVatId());
 		
@@ -94,14 +100,14 @@ public class VatController{
 		
 		editVat = null;
 		
-		return new RedirectView("http://localhost:8080/vat/getAll");
+		return "redirect:/vat/getAll";
 	}
 	
 	@PostMapping("/delete")
-	public RedirectView deleteVat(@RequestParam("vatId") String vatId, Model model) {
+	public String deleteVat(@RequestParam("vatId") String vatId, Model model) {
 
 	    vatRepository.deleteById(Integer.parseInt(vatId));
       
-	    return new RedirectView("http://localhost:8080/vat/getAll");
+	    return "redirect:/vat/getAll";
 	}
 }

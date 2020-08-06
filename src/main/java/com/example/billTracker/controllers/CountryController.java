@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.billTracker.dto.CountryDto;
+import com.example.billTracker.helper.ErrorMessage;
 import com.example.billTracker.repositories.CountryRepository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -48,11 +50,11 @@ public class CountryController{
 	}
 	
 	@PostMapping("/add")
-	public RedirectView countryAdded(CountryDto country) {
+	public String countryAdded(CountryDto country) {
 		
 		countryRepository.save(country);
 		
-		return new RedirectView("http://localhost:8080/country/getAll");
+		return "redirect:/country/getAll";
 	}
 	
 	@PostMapping("/editCountry")
@@ -69,20 +71,31 @@ public class CountryController{
 	}
 	
 	@PostMapping("/edit")
-	public RedirectView editCountry(@ModelAttribute("country") CountryDto country) {
+	public String editCountry(@ModelAttribute("country") CountryDto country) {
 				
 		countryRepository.updateCountry(country.getName(), editCountry.getCountryId());
 		
 		editCountry = null;
 		
-		return new RedirectView("http://localhost:8080/country/getAll");
+		return "redirect:/country/getAll";
 	}
 	
 	@PostMapping("/delete")
-	public RedirectView deleteCountry(@RequestParam("countryId") String countryId, Model model) {
+	public String deleteCountry(@RequestParam("countryId") String countryId, Model model) {
 
-	    countryRepository.deleteById(Integer.parseInt(countryId));
+	    try{
+			countryRepository.deleteById(Integer.parseInt(countryId));
+		} catch (DataAccessException e){
+
+			ErrorMessage errorMessage = new ErrorMessage("An error has occured, the Country that you wanted to delete is already contained in a VAT.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
+			return "error";
+		}
       
-	    return new RedirectView("http://localhost:8080/country/getAll");
+//	    return new RedirectView("http://localhost:8080/country/getAll");
+	    
+	    return "redirect:/country/getAll";
 	}
 }

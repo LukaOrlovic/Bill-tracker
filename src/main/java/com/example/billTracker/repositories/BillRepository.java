@@ -12,4 +12,6 @@ public interface BillRepository extends CrudRepository<BillDto, Integer>{
 	
 	List<BillDto> findBillsByPayingCompanyCompanyIdIsAndReceivingCompanyCompanyIdIs(int payingCompanyId, int receivingCompanyId);
 	
+	List<BillDto> findBillsByPayingCompanyCompanyIdIsOrReceivingCompanyCompanyIdIs(int payingCompanyId, int receivingCompanyId);
+	
 }
