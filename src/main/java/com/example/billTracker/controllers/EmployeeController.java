@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.billTracker.dto.EmployeeDto;
+import com.example.billTracker.dto.RoleDto;
 import com.example.billTracker.dto.SalaryDto;
 import com.example.billTracker.helper.ErrorMessage;
 import com.example.billTracker.repositories.EmployeeRepository;
@@ -44,7 +42,6 @@ public class EmployeeController{
 
 		if(!employees.isEmpty()) return "employee/getAll";
 			
-		System.out.println("Ovde");
 		ErrorMessage errorMessage = new ErrorMessage("Could not find any employees.");
 		
 		model.addAttribute("errorObject", errorMessage);
@@ -58,23 +55,28 @@ public class EmployeeController{
 		EmployeeDto employee = new EmployeeDto();
 
 		model.addAttribute("employee", employee);
+		
+		model.addAttribute("roles", RoleDto.values());
 
 		return "employee/addEmployee";
 	}
 
 	@PostMapping("/add")
-	public String countryAdded(EmployeeDto employee){
+	public String employeeAdded(@ModelAttribute("employee") EmployeeDto employee){
 		 
-		EmployeeDto e = employeeRepository.findTopByOrderByEmployeeIdDesc();
+		int id = 1;
 		
-		int id; 
+		EmployeeDto e = null;
 		
-		if(e == null) {
-			id = 1;
-		}else {
+		try{
+			e = employeeRepository.findTopByOrderByEmployeeIdDesc();
+		} catch (Exception e1){
+		}
+		
+		if(e != null) {
 			id = e.getEmployeeId() + 1;
 		}
-
+		
 		employee.setEmployeeId(id);
 		
 		employeeRepository.save(employee);

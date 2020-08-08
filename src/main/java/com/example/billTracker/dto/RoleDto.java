@@ -2,5 +2,5 @@ package com.example.billTracker.dto;
 
 public enum RoleDto{
 
-	Admin, User
+	CEO, HR, SoftwareEngineer, Management, TechnicalSupport, QA
 }

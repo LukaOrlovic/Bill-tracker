@@ -2,7 +2,6 @@ package com.example.billTracker.repositories;
 
 import java.util.List;
 
-import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import com.example.billTracker.dto.EmployeeDto;
@@ -12,5 +11,7 @@ public interface EmployeeRepository extends ElasticsearchRepository<EmployeeDto,
 	List<EmployeeDto> findByEmployeeIdEquals(int employeeId);
 	
 	EmployeeDto findTopByOrderByEmployeeIdDesc(); 
+	
+	EmployeeDto findByUsername(String username);
 	
 }

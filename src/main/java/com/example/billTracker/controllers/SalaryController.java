@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.billTracker.dto.SalaryDto;
 import com.example.billTracker.helper.ErrorMessage;
@@ -36,10 +35,18 @@ public class SalaryController{
 	@GetMapping("/getAll")
 	public String getAll(Model model) {
 		
-		List<SalaryDto> salaries = (List<SalaryDto>) salaryRepository.findByOrderBySalaryIdAsc();
-				
-		if(salaries.isEmpty()) return "error";
-		
+		List<SalaryDto> salaries;
+		try{
+			salaries = (List<SalaryDto>) salaryRepository.findByOrderBySalaryIdAsc();
+		} catch (Exception e){
+			
+			ErrorMessage errorMessage = new ErrorMessage("Could not find any Salaries.");
+			
+			model.addAttribute("errorObject", errorMessage);
+			
+			return "error";
+		}
+						
 		model.addAttribute("salaries", salaries);
 		
 		return "salary/getAll";

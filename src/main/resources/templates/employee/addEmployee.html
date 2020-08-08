@@ -33,13 +33,13 @@
 					<a class="dropdown-item" th:href="@{/country/getAll}">Get all</a> <a
 						class="dropdown-item" th:href="@{/country/add}">Add</a>
 				</div></li>
-			<li class="nav-item dropdown active"><a
+			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Company </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" th:href="@{/company/getAll}">Get all</a> <a
-						class="dropdown-item active" th:href="@{/company/add}">Add</a>
+						class="dropdown-item" th:href="@{/company/add}">Add</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -88,23 +88,38 @@
 		<div class="form-group">
 			<div class="grid">
 				<div class="ingredient-group" id="wraps">
+					<br />
 					<h3 class="text-center">Designate a new employee:</h3>
-					<br /> <br />
 					<div>
 						<input type="text" class="form-control text-center"
 							placeholder="Enter employee name" th:field="*{name}" />
 					</div>
+					<br />
 					<div>
 						<input type="text" class="form-control text-center"
 							placeholder="Enter employee surname" th:field="*{surname}" />
 					</div>
+					<br />
+					<div>
+						<select class="custom-select text-center"
+							th:field="*{position}">
+							<option th:each="r : ${roles}" th:value="${{r}}"
+								th:text="${r}"></option>
+						</select>
+					</div>
+					<br />
 					<div>
 						<input type="text" class="form-control text-center"
-							placeholder="Enter employee position" th:field="*{position}" />
+							placeholder="Enter employee username" th:field="*{username}" />
 					</div>
+					<br />
+					<div>
+						<input type="password" class="form-control text-center"
+							placeholder="Enter employee password" th:field="*{password}" />
+					</div>
+					<br />
 				</div>
 			</div>
-			<br /> <br />
 			<div class=" h-100 d-flex justify-content-center align-items-center">
 				<!-- <input type="text" th:field="*{name}" /> <br /> -->
 				<button>Save this employee</button>
