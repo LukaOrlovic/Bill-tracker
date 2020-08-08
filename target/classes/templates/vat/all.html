@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-	<link rel="icon" href="https://img.icons8.com/fluent/48/000000/us-dollar.png">
+<link rel="icon"
+	href="https://img.icons8.com/fluent/48/000000/us-dollar.png">
 <head>
 <title>Bill tracker</title>
 <link rel="stylesheet" th:href="@{/styles.css}" />
@@ -16,14 +17,16 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand monospace" th:href="@{/company/getAll}">Bill tracker</a>
+		<a class="navbar-brand monospace" th:href="@{/company/getAll}">Bill
+			tracker</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarText" aria-controls="navbarText"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<ul class="navbar-nav">
-			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">Country</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,19 +38,49 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Company </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item active" th:href="@{/company/getAll}">Get all</a> <a
-						class="dropdown-item" th:href="@{/company/add}">Add</a>
+					<a class="dropdown-item active" th:href="@{/company/getAll}">Get
+						all</a> <a class="dropdown-item" th:href="@{/company/add}">Add</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Bill </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> 
-					<a class="dropdown-item" th:href="@{/bill/add}">Add</a>
-					<a class="dropdown-item" th:href="@{/bill/find}">Find by ID</a>
-					<a class="dropdown-item" th:href="@{/bill/findAmounts}">Find by Amount</a>
-					<a class="dropdown-item" th:href="@{/bill/findByCompanies}">Find by Companies</a>
+					<a class="dropdown-item" th:href="@{/bill/getAll}">Get all</a> <a
+						class="dropdown-item" th:href="@{/bill/add}">Add</a> <a
+						class="dropdown-item" th:href="@{/bill/find}">Find by ID</a> <a
+						class="dropdown-item" th:href="@{/bill/findAmounts}">Find by
+						Amount</a> <a class="dropdown-item" th:href="@{/bill/findByCompanies}">Find
+						by Companies</a>
+				</div></li>
+
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Employee </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/employee/getAll}">Get all</a>
+					<a class="dropdown-item" th:href="@{/employee/add}">Add</a>
+				</div></li>
+
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Salary </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" th:href="@{/salary/getAll}">Get all</a> <a
+						class="dropdown-item" th:href="@{/salary/add}">Add</a> <a
+						class="dropdown-item" th:href="@{/salary/findAmounts}">Find by
+						Amount</a>
+				</div></li>
+
+			<li class="nav-item dropdown active"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> VAT </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item active" th:href="@{/vat/all}">Get all</a> <a
+						class="dropdown-item" th:href="@{/vat/add}">Add</a>
 				</div></li>
 		</ul>
 	</nav>
@@ -74,15 +107,13 @@
 					<td th:text="${v.amountValue}"></td>
 					<td th:text="${v.currency}"></td>
 					<td>
-						<form method="POST"
-							th:action="@{/vat/editVat(vatId=${v.vatId})}">
+						<form method="POST" th:action="@{/vat/editVat(vatId=${v.vatId})}">
 							<button type="submit" name="submit" value="value"
 								class="link-button">EDIT</button>
 						</form>
 					</td>
 					<td>
-						<form method="POST"
-							th:action="@{/vat/delete(vatId=${v.vatId})}">
+						<form method="POST" th:action="@{/vat/delete(vatId=${v.vatId})}">
 							<button type="submit" name="submit" value="value"
 								class="link-button">DELETE</button>
 						</form>

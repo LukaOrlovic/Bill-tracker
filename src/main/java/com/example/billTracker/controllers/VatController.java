@@ -60,17 +60,23 @@ public class VatController{
 		model.addAttribute("company", company);
 		
 		VatDto vat = new VatDto();
+		
+		vat.setCompany(company);
+		
 		model.addAttribute("vat", vat);
 		
-		return "vat/addVat";
+		return "vat/add";
 	}
 	
 	@PostMapping("/add")
 	public String vatAdded(VatDto vat) {
+		CompanyDto company = companyRepository.findCompanyByParentCompanyIsTrue();
+		
+		vat.setCompany(company);
 		
 		vatRepository.save(vat);
 		
-		return "redirect:/vat/getAll";
+		return "redirect:/vat/all";
 	}
 	
 	@PostMapping("/editVat")
@@ -108,6 +114,6 @@ public class VatController{
 
 	    vatRepository.deleteById(Integer.parseInt(vatId));
       
-	    return "redirect:/vat/getAll";
+	    return "redirect:/vat/all";
 	}
 }
