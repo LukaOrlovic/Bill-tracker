@@ -1,5 +1,7 @@
 package com.example.billTracker.controllers;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +20,11 @@ import com.example.billTracker.dto.EmployeeDto;
 import com.example.billTracker.dto.RoleDto;
 import com.example.billTracker.dto.SalaryDto;
 import com.example.billTracker.helper.ErrorMessage;
+import com.example.billTracker.jasperService.JasperEmployeeService;
 import com.example.billTracker.repositories.EmployeeRepository;
 import com.example.billTracker.repositories.SalaryRepository;
+
+import net.sf.jasperreports.engine.JRException;
 
 @Controller
 @RequestMapping("/employee")
@@ -30,6 +35,9 @@ public class EmployeeController{
 
 	@Autowired
 	SalaryRepository salaryRepository;
+	
+	@Autowired
+	JasperEmployeeService jasperEmployeeService;
 	
 	EmployeeDto editEmployee;
 	
@@ -157,4 +165,12 @@ public class EmployeeController{
 		
 		return "redirect:/employee/getAll";
 	}
+	
+	@GetMapping("/getAllJasper")
+	public String getAllEmployees() throws FileNotFoundException, JRException {
+		
+		return jasperEmployeeService.exportReport("html");
+		
+	}
+	
 }
